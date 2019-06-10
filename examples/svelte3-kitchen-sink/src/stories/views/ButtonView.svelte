@@ -1,18 +1,24 @@
 <h1>Button view</h1>
-<Button {rounded} on:click={handleClick}>{text}: {count}</Button>
+
+<Button {rounded} on:click={incrementCount}>{text}: {count}</Button>
+
 <p>A little text to show this is a view.</p>
-<p>If we need to test components in a Svelte environment, for instance to test slot behaviour,</p>
-<p>then wrapping the component up in a view</p>
-<p>made just for the story is the simplest way to achieve this.</p>
 
 <script>
+  /* eslint-disable import/no-mutable-exports */
+
+  import { createEventDispatcher } from 'svelte';
+
   import Button from '../../components/Button.svelte';
+
+  const dispatch = createEventDispatcher();
 
   export let rounded = false;
   export let count = 0;
   export let text = 'You clicked';
 
-  function handleClick(event) {
+  export const incrementCount = event => {
     count += 1;
-  }
+    dispatch('click', event);
+  };
 </script>

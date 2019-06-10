@@ -1,11 +1,19 @@
-<button
-  class="button"
-  class:rounded={rounded}
-  on:click={onClick}>
-  <strong>{ rounded ? 'Round' : 'Square' } corners</strong><br>
-  { text }
-  <slot></slot>
-</button>
+<script>
+  /* eslint-disable import/no-mutable-exports */
+
+  import { createEventDispatcher } from 'svelte';
+
+  export let rounded = false;
+  export let count = 0;
+  export let text = '';
+
+  const dispatch = createEventDispatcher();
+
+  const onClick = event => {
+    rounded = !rounded;
+    dispatch('click', event);
+  };
+</script>
 
 <style>
   .rounded {
@@ -20,21 +28,11 @@
   }
 </style>
 
-<script>
-  import { createEventDispatcher, afterUpdate } from 'svelte';
-  export let count = 0;
-  export let text = '';
-  export let rounded = true;
-
-  const dispatch = createEventDispatcher();
-
-  function onClick(event) {
-    rounded = !rounded;
-
-    dispatch('click', event);
-  }
-
-  afterUpdate(() => {
-    dispatch('afterUpdate');
-  });
-</script>
+<button
+  class="button"
+  class:rounded
+  on:click={onClick}>
+  <strong>{rounded ? 'Round' : 'Square'} corners</strong><br>
+  {text}
+  <slot />
+</button>

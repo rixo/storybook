@@ -1,7 +1,5 @@
-import { configure, addParameters, addDecorator } from '@storybook/svelte';
-import { withA11y } from '@storybook/addon-a11y';
+import { configure, addParameters, loadSvelteStories } from '@storybook/svelte3';
 
-addDecorator(withA11y);
 addParameters({
   options: {
     hierarchyRootSeparator: /\|/,
@@ -9,11 +7,8 @@ addParameters({
 });
 
 function loadStories() {
-  require('../src/stories');
-
-  const req = require.context('../src/stories', true, /\.stories\.js$/);
-
-  req.keys().forEach(filename => req(filename));
+  const req = require.context('../src', true, /\.stories\.svelte$/);
+  loadSvelteStories(req);
 }
 
 configure(loadStories, module);

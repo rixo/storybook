@@ -1,3 +1,3 @@
 import { window } from 'global';
 
-window.STORYBOOK_ENV = 'svelte';
+window.STORYBOOK_ENV = 'svelte3';
